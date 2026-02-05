@@ -205,26 +205,30 @@
 
                 if (!file) throw new Error("Please upload a PDF");
 
-                // 1. Upload PDF
-                const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '-')}`;
-                const { data: uploadData, error: uploadError } = await supabase.storage
-                    .from('papers')
-                    .upload(fileName, file);
-
-                if (uploadError) throw uploadError;
-
-                // 2. Get Public URL
-                const { data: { publicUrl } } = supabase.storage
-                    .from('papers')
-                    .getPublicUrl(fileName);
-
-                // 3. Confirm Authentication (Debug)
+                // 1. Confirm Authentication FIRST
                 const { data: { user }, error: authError } = await supabase.auth.getUser();
                 console.log('Current User:', user);
 
                 if (authError || !user) {
                     throw new Error("Authentication failed. Please log in again.");
                 }
+
+                // 2. Upload PDF
+                // Using user-requested pattern
+                const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '-')}`; // Kept sanitize for safety
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('papers')
+                    .upload(fileName, file);
+
+                if (uploadError) {
+                    console.error("Upload error:", uploadError);
+                    throw uploadError;
+                }
+
+                // 3. Get Public URL using returned path
+                const { data: { publicUrl } } = supabase.storage
+                    .from('papers')
+                    .getPublicUrl(uploadData.path);
 
                 // 4. Insert into DB
                 const { error: dbError } = await supabase
