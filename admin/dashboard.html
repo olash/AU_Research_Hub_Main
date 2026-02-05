@@ -77,6 +77,13 @@
         }
         checkSession();
 
+        // --- Persistent Session Check ---
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (!session) {
+                window.location.href = '/admin';
+            }
+        });
+
         document.getElementById('logout-btn').addEventListener('click', async () => {
             await supabase.auth.signOut();
             window.location.href = '/admin';

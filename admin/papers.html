@@ -165,6 +165,13 @@
         }
         checkSession();
 
+        // --- Persistent Session Check ---
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (!session) {
+                window.location.href = '/admin';
+            }
+        });
+
         document.getElementById('logout-btn').addEventListener('click', async () => {
             await supabase.auth.signOut();
             window.location.href = '/admin';
@@ -211,7 +218,15 @@
                     .from('papers')
                     .getPublicUrl(fileName);
 
-                // 3. Insert into DB
+                // 3. Confirm Authentication (Debug)
+                const { data: { user }, error: authError } = await supabase.auth.getUser();
+                console.log('Current User:', user);
+
+                if (authError || !user) {
+                    throw new Error("Authentication failed. Please log in again.");
+                }
+
+                // 4. Insert into DB
                 const { error: dbError } = await supabase
                     .from('papers')
                     .insert([{
