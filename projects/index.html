@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources</title>
+    <title>Project</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- CSS -->
-    <link href="./style.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -22,15 +22,15 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <a href="index.html">
+                <a href="/">
                     <div class="flex items-center space-x-3">
                         <div class="flex items-center">
                             <div class="w-16 py-6">
-                                <img src="images/AUlogo.png" alt="AU Logo">
+                                <img src="../images/AUlogo.png" alt="AU Logo">
                             </div>
                             <span class="text-xl font-medium">X</span>
                             <div class="w-14 h-14">
-                                <img src="images/UNILAG.png" alt="UNILAG logo">
+                                <img src="../images/UNILAG.png" alt="UNILAG logo">
                             </div>
                         </div>
                     </div>
@@ -38,9 +38,9 @@
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
-                    <a href="Project.html" class="text-gray-700 hover:text-blue-600 transition-colors">Projects</a>
-                    <a href="Resources.html" class="text-gray-700 hover:text-blue-600 transition-colors">Resources</a>
+                    <a href="/" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="/projects" class="text-gray-700 hover:text-blue-600 transition-colors">Projects</a>
+                    <a href="/resources" class="text-gray-700 hover:text-blue-600 transition-colors">Resources</a>
                 </nav>
 
                 <!-- Desktop CTA and Search -->
@@ -85,9 +85,9 @@
                     </button>
                 </div>
                 <nav class="space-y-6">
-                    <a href="index.html" class="block text-gray-700 hover:text-blue-600 text-lg">Home</a>
-                    <a href="Project.html" class="block text-gray-700 hover:text-blue-600 text-lg">Projects</a>
-                    <a href="Resources.html" class="block text-gray-700 hover:text-blue-600 text-lg">Resources</a>
+                    <a href="/" class="block text-gray-700 hover:text-blue-600 text-lg">Home</a>
+                    <a href="/projects" class="block text-gray-700 hover:text-blue-600 text-lg">Projects</a>
+                    <a href="/resources" class="block text-gray-700 hover:text-blue-600 text-lg">Resources</a>
                     <div class="pt-6 border-t border-gray-200">
                         <a href="https://tally.so/r/mBVWK1">
                             <button
@@ -108,23 +108,24 @@
     <!-- Mobile menu overlay -->
     <div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden hidden"></div>
 
-    <!--Resource Section -->
+    <!--Projects Section -->
     <section class="fade-in-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
         <div class="md:flex justify-between items-end  mb-12 gap-4">
             <div class="lg:w-3/6">
                 <h2 class="text-4xl lg:text-5xl text-gray-900 mb-4">
-                    Academic Resources
+                    Research Projects
                 </h2>
                 <p class="text-gray-600 text-lg max-w-4xl leading-relaxed">
-                    Explore a growing repository of journal articles, theses, case studies, and research papers
-                    contributed by academics and practitioners across the field of architecture.
+                    A curated archive of scholarly projects carried out by our academic community, reflecting the
+                    diversity, depth, and relevance of architectural research at AU.
                 </p>
             </div>
         </div>
         <div class="space-y-4 mb-8 lg:flex items-end">
             <div class="lg:w-3/6 max-w-4xl">
                 <p class="text-sm text-gray-600 leading-loose">
-                    All resources are free to access and downloadable in PDF or DOCX format.
+                    Filter by year, theme, or region to discover design explorations, case studies, and theoretical
+                    frameworks addressing the built environment and its evolving challenges.
                 </p>
             </div>
             <div class="">
@@ -149,20 +150,19 @@
                         </div>
                     </div>
 
-                    <!-- Date Dropdown -->
+                    <!-- Region Dropdown -->
                     <div class="space-y-2">
-                        <label class="block text-sm/[10px] font-medium text-gray-400 mb-2 ps-3">Date</label>
+                        <label class="block text-sm/[10px] font-medium text-gray-400 mb-2 ps-3">Region</label>
                         <div class="relative">
                             <select
                                 class="w-full appearance-none bg-white border border-gray-200 rounded-full px-6 py-4 pr-12 text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all cursor-pointer">
-                                <option value=""><i class="fa fa-calendar" aria-hidden="true"></i>Select date here
-                                </option>
-                                <!-- <option value="north-america">North America</option>
-                                    <option value="europe">Europe</option>
-                                    <option value="asia">Asia</option>
-                                    <option value="africa">Africa</option>
-                                    <option value="south-america">South America</option>
-                                    <option value="oceania">Oceania</option> -->
+                                <option value="">Select region here</option>
+                                <option value="north-america">North America</option>
+                                <option value="europe">Europe</option>
+                                <option value="asia">Asia</option>
+                                <option value="africa">Africa</option>
+                                <option value="south-america">South America</option>
+                                <option value="oceania">Oceania</option>
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                                 <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
@@ -170,20 +170,20 @@
                         </div>
                     </div>
 
-                    <!-- Researcher Dropdown -->
+                    <!-- Year Dropdown -->
                     <div class="space-y-2">
-                        <label class="block text-sm/[10px] font-medium text-gray-400 mb-2 ps-3">Lead Researcher</label>
+                        <label class="block text-sm/[10px] font-medium text-gray-400 mb-2 ps-3">Year</label>
                         <div class="relative">
                             <select
                                 class="w-full appearance-none bg-white border border-gray-200 rounded-full px-6 py-4 pr-12 text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all cursor-pointer">
-                                <option value="">Select Lead Researcher here</option>
-                                <!-- <option value="2024">2024</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option> -->
+                                <option value="">Select year here</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                                 <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
@@ -197,127 +197,89 @@
 
     </section>
 
-    <!-- Resource Grid -->
-    <div class="fade-in-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
-        <!-- Grid Layout -->
-        <div id="papers-grid" class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            <div class="col-span-full text-center py-12">
-                <i class="fas fa-circle-notch fa-spin text-gray-400 text-3xl mb-4"></i>
-                <p class="text-gray-500">Loading resources...</p>
+    <!-- Project Cards Grid -->
+    <section class="fade-in-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Grand Vista Card -->
+            <div class=" rounded-2xl overflow-hidden">
+                <div class="relative">
+                    <img src="../images/Grand Vista.png" alt="Grand Vista"
+                        class="w-full h-96 object-cover bg-gradient-to-br from-amber-100 to-amber-200">
+                </div>
+                <div class="py-6">
+                    <h3 class="text-xl font-medium text-gray-900 mb-4">Grand Vista</h3>
+
+                    <div class="grid grid-cols-3 gap-y-3 text-sm">
+                        <div>
+                            <span class="text-gray-500 block text-xs">Category</span>
+                            <span class="text-gray-500">Sustainable</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Year</span>
+                            <span class="text-gray-500">2021-23</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Location</span>
+                            <span class="text-gray-500">Tokyo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Elegant Retreat Card -->
+            <div class="rounded-2xl overflow-hidden">
+                <div class="relative">
+                    <img src="../images/Elegant Retreat.png" alt="Elegant Retreat"
+                        class="w-full h-96 object-cover bg-gradient-to-br from-stone-100 to-stone-200">
+                </div>
+                <div class="py-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Elegant Retreat</h3>
+
+                    <div class="grid grid-cols-3 gap-y-3 text-sm">
+                        <div>
+                            <span class="text-gray-500 block text-xs">Category</span>
+                            <span class="text-gray-500">Interior</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Year</span>
+                            <span class="text-gray-500">2022</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Location</span>
+                            <span class="text-gray-500">San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Marvel Card -->
+            <div class="rounded-2xl overflow-hidden">
+                <div class="relative">
+                    <img src="../images/Modern Marvel.png" alt="Modern Marvel"
+                        class="w-full h-96 object-cover bg-gradient-to-br from-orange-100 to-red-100">
+                </div>
+                <div class="py-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Modern Marvel</h3>
+
+                    <div class="grid grid-cols-3 gap-y-3 text-sm">
+                        <div>
+                            <span class="text-gray-500 block text-xs">Category</span>
+                            <span class="text-gray-500">Residential</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Year</span>
+                            <span class="text-gray-500">2021</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block text-xs">Location</span>
+                            <span class="text-gray-500">London, UK</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script type="module">
-        import { supabase } from './supabase.js';
-
-        async function loadPapers() {
-            const grid = document.getElementById('papers-grid');
-
-            try {
-                const { data: papers, error } = await supabase
-                    .from('papers')
-                    .select('*')
-                    .eq('published', true)
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
-                if (!papers || papers.length === 0) {
-                    grid.innerHTML = `
-                        <div class="col-span-full text-center py-12 bg-gray-50 rounded-2xl border border-gray-100">
-                            <i class="fas fa-folder-open text-gray-300 text-4xl mb-4"></i>
-                            <h3 class="text-lg font-medium text-gray-900">No resources available yet</h3>
-                            <p class="text-gray-500 mt-2">Check back later for new publications.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                grid.innerHTML = papers.map(paper => `
-                    <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 flex flex-col h-full">
-                        <!-- Image Container -->
-                        <div class="relative bg-gray-200 h-48">
-                            <div class="w-full h-full flex items-center justify-center bg-gray-100">
-                                <i class="fas fa-file-pdf text-4xl text-gray-300"></i>
-                            </div>
-                            <div class="absolute top-4 left-4">
-                                <span class="bg-white backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
-                                    ${paper.category || 'Research'}
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Content -->
-                        <div class="py-4 px-2 flex-grow flex flex-col">
-                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
-                                ${paper.title}
-                            </h3>
-                            
-                            <div class="text-sm mb-4 text-gray-600 font-medium mt-auto">
-                                <div class="mb-4">
-                                    <span>By ${paper.author}</span>
-                                </div>
-                                <div class="flex items-center space-x-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span>${new Date(paper.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                                </div>
-                            </div>
-                            
-                            <a href="${paper.pdf_url}" target="_blank" class="block">
-                                <button class="w-full flex items-center justify-center space-x-2 bg-white px-4 py-2 rounded-full text-sm text-gray-700 font-bold border border-gray-200 hover:bg-gray-50 transition-colors"> 
-                                    <span>Read More</span>
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                    </svg>
-                                </button>
-                            </a>
-                        </div>
-                    </article>
-                `).join('');
-
-            } catch (err) {
-                console.error('Error fetching papers:', err);
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12">
-                        <i class="fas fa-exclamation-circle text-red-400 text-3xl mb-4"></i>
-                        <p class="text-gray-500">Failed to load resources. Please try again later.</p>
-                    </div>
-                `;
-            }
-        }
-
-        loadPapers();
-    </script>
-    </h3>
-
-    <div class="text-sm mb-4 text-gray-600 font-medium">
-        <div class="mb-4">
-            <span>By Tunji Adejumo</span>
-        </div>
-        <div class="flex items-center space-x-1">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                </path>
-            </svg>
-            <span>November 10, 2024</span>
-        </div>
-    </div>
-
-    <button
-        class="flex items-center space-x-2 bg-white px-4 py-2 rounded-full text-sm text-gray-700 font-bold mb-4 border border-gray-200">
-        <span>Read More</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-    </button>
-    </div>
-    </article>
-    </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <div
@@ -328,7 +290,7 @@
             class="hidden lg:block absolute left-0 bottom-32 -translate-x-12 rotate-[-12deg] z-0 hover:z-10 transition-all duration-300 hover:rotate-0 hover:translate-x-0">
             <div class="bg-white p-3 rounded-2xl shadow-2xl w-72">
                 <div class="h-48 overflow-hidden rounded-xl mb-4 relative">
-                    <img src="images/Highrise.jpg" alt="Makoko" class="w-full h-full object-cover">
+                    <img src="../images/Highrise.jpg" alt="Makoko" class="w-full h-full object-cover">
                 </div>
                 <div class="px-2 pb-2">
                     <h3 class="text-lg font-bold text-gray-900 mb-3">Makoko Community</h3>
@@ -357,7 +319,7 @@
             <!-- Card 1 -->
             <div class="bg-white p-3 rounded-2xl shadow-2xl w-72 mb-8 relative z-10">
                 <div class="h-40 overflow-hidden rounded-xl mb-4 relative">
-                    <img src="images/Spiral.png" alt="Spiral" class="w-full h-full object-cover">
+                    <img src="../images/Spiral.png" alt="Spiral" class="w-full h-full object-cover">
                     <span
                         class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold">Work
                         Life</span>
@@ -375,7 +337,7 @@
             <div
                 class="bg-white p-3 rounded-2xl shadow-2xl w-72 translate-x-12 -translate-y-4 opacity-50 hover:opacity-100 transition-opacity">
                 <div class="h-40 overflow-hidden rounded-xl mb-4 relative">
-                    <img src="images/Spiral.png" alt="Spiral" class="w-full h-full object-cover">
+                    <img src="../images/Spiral.png" alt="Spiral" class="w-full h-full object-cover">
                     <span
                         class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold">Work
                         Life</span>
@@ -422,8 +384,8 @@
             <!-- Footer Navigation -->
             <div class="border-t border-gray-800 pt-10 w-full">
                 <div class="flex flex-wrap justify-center gap-8 mb-8 text-gray-400 font-medium">
-                    <a href="Project.html" class="hover:text-white transition-colors">Projects</a>
-                    <a href="Resources.html" class="hover:text-white transition-colors">Resources</a>
+                    <a href="/projects" class="hover:text-white transition-colors">Projects</a>
+                    <a href="/resources" class="hover:text-white transition-colors">Resources</a>
                     <a href="#" class="hover:text-white transition-colors">News & Events</a>
                     <a href="https://tally.so/r/mBVWK1" class="hover:text-white transition-colors">Submit a Paper</a>
                 </div>
@@ -433,7 +395,7 @@
                         <i class="fab fa-instagram"></i>
                     </a>
                     <a href="#" class="text-gray-500 hover:text-white transition-colors text-xl">
-                        <i class="fab fa-twitter text-xl"></i>
+                        <i class="fab fa-twitter"></i>
                     </a>
                     <a href="#" class="text-gray-500 hover:text-white transition-colors text-xl">
                         <i class="fab fa-linkedin"></i>
@@ -481,7 +443,7 @@
     </div>
 
     <!-- Javascript -->
-    <script type="module" src="script.js"></script>
+    <script type="module" src="../script.js"></script>
 </body>
 
 </html>

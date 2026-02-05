@@ -8,7 +8,7 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- CSS -->
-    <link href="./style.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -46,7 +46,7 @@
     </div>
 
     <script type="module">
-        import { supabase } from './supabase.js';
+        import { supabase } from '../supabase.js';
 
         const loginForm = document.getElementById('login-form');
         const errorMessage = document.getElementById('error-message');
@@ -72,7 +72,7 @@
                 if (error) throw error;
 
                 // Success
-                window.location.href = 'admin-dashboard.html';
+                window.location.href = '/admin/dashboard';
             } catch (error) {
                 errorMessage.textContent = error.message || 'Invalid login credentials';
                 errorMessage.classList.remove('hidden');
