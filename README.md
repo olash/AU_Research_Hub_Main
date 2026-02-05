@@ -1,2 +1,2 @@
-# AU_Research_Hub_Main
-A website for the Architecture and Urbanism Hub in Unilag
+# AU_Research_Hub
+A website for UNILAG architecture and urbanism research hub 
