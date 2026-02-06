@@ -122,29 +122,137 @@ document.addEventListener("DOMContentLoaded", function () {
     })();
 });
 
-// --- Global Search Logic ---
+// --- Global Live Search Logic ---
 const openSearchBtn = document.getElementById("openSearch");
 const searchModal = document.getElementById("searchModal");
 const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
 
-if (openSearchBtn && searchModal && searchInput) {
+if (openSearchBtn && searchModal && searchInput && searchResults) {
+    // Open Logic
     openSearchBtn.addEventListener("click", () => {
         searchModal.classList.remove("hidden");
+        searchInput.value = "";
+        searchResults.innerHTML = "";
         searchInput.focus();
     });
 
+    // Close Logic
     searchModal.addEventListener("click", (e) => {
         if (e.target === searchModal) {
             searchModal.classList.add("hidden");
         }
     });
 
-    searchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const query = searchInput.value.trim();
-            if (query) {
-                window.location.href = `/search/?q=${encodeURIComponent(query)}`;
-            }
+    // Live Search Typing Logic
+    let searchTimeout;
+
+    searchInput.addEventListener("input", () => {
+        const query = searchInput.value.trim();
+
+        clearTimeout(searchTimeout);
+
+        if (query.length < 2) {
+            searchResults.innerHTML = "";
+            return;
         }
+
+        // debounce (prevents spam requests)
+        searchTimeout = setTimeout(() => {
+            runGlobalSearch(query);
+        }, 300);
     });
+
+    // Run Search against Supabase
+    async function runGlobalSearch(query) {
+        searchResults.innerHTML = `
+        <div class="px-6 py-4 text-sm text-gray-500">
+          Searching...
+        </div>
+      `;
+
+        try {
+            const [papersRes, galleryRes] = await Promise.all([
+                supabase
+                    .from("papers")
+                    .select("id, title, author, pdf_url")
+                    .ilike("title", `%${query}%`)
+                    .limit(5),
+
+                supabase
+                    .from("gallery")
+                    .select("id, image_url, caption")
+                    .ilike("caption", `%${query}%`)
+                    .limit(5)
+            ]);
+
+            renderSearchResults(papersRes.data || [], galleryRes.data || []);
+        } catch (err) {
+            console.error("Search failed:", err);
+            searchResults.innerHTML = `<div class="px-6 py-4 text-sm text-red-500">Search failed. Please try again.</div>`;
+        }
+    }
+
+    // Render Results
+    function renderSearchResults(papers, gallery) {
+        searchResults.innerHTML = "";
+
+        if (papers.length === 0 && gallery.length === 0) {
+            searchResults.innerHTML = `
+          <div class="px-6 py-6 text-sm text-gray-500">
+            No results found
+          </div>
+        `;
+            return;
+        }
+
+        // PAPERS
+        if (papers.length > 0) {
+            const section = document.createElement("div");
+
+            section.innerHTML = `
+          <div class="px-6 py-3 text-xs uppercase text-gray-400 bg-gray-50 font-semibold tracking-wider">
+            Papers
+          </div>
+        `;
+
+            papers.forEach(paper => {
+                section.innerHTML += `
+            <a href="${paper.pdf_url}" target="_blank" class="block px-6 py-4 hover:bg-blue-50 transition-colors group">
+              <div class="font-medium text-gray-900 group-hover:text-blue-700">${paper.title}</div>
+              <div class="text-sm text-gray-500">${paper.author || 'Unknown Author'}</div>
+            </a>
+          `;
+            });
+
+            searchResults.appendChild(section);
+        }
+
+        // GALLERY
+        if (gallery.length > 0) {
+            const section = document.createElement("div");
+
+            section.innerHTML = `
+          <div class="px-6 py-3 text-xs uppercase text-gray-400 bg-gray-50 font-semibold tracking-wider">
+            Gallery
+          </div>
+        `;
+
+            gallery.forEach(item => {
+                section.innerHTML += `
+            <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors cursor-default">
+              <img
+                src="${item.image_url}"
+                class="w-12 h-12 object-cover rounded-lg shadow-sm"
+              />
+              <div class="text-sm text-gray-700">
+                ${item.caption || "Gallery image"}
+              </div>
+            </div>
+          `;
+            });
+
+            searchResults.appendChild(section);
+        }
+    }
 }
