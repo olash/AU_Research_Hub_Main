@@ -82,6 +82,13 @@
                         </div>
                     </div>
 
+                    <div class="flex items-center mb-6">
+                        <input id="paper-featured" type="checkbox"
+                            class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                        <label for="paper-featured" class="ml-2 text-sm font-medium text-gray-900">Feature on
+                            Homepage</label>
+                    </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Upload PDF</label>
                         <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors cursor-pointer"
@@ -250,6 +257,7 @@
                 const author = document.getElementById('paper-author').value;
                 const date = document.getElementById('paper-date').value;
                 const category = document.getElementById('paper-category').value;
+                const isFeatured = document.getElementById('paper-featured').checked;
                 const file = pdfInput.files[0];
 
                 if (!file) throw new Error("Please upload a PDF");
@@ -295,7 +303,9 @@
                         category,
                         pdf_url: publicUrl,
                         cover_image: coverImageUrl,
-                        published: true
+                        cover_image: coverImageUrl,
+                        published: true,
+                        is_featured: isFeatured
                     }]);
 
                 if (dbError) throw dbError;
@@ -347,7 +357,10 @@
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="p-4 font-medium text-gray-900">${paper.title}</td>
                     <td class="p-4 text-gray-600">${paper.author}</td>
-                    <td class="p-4"><span class="bg-blue-50 text-blue-600 py-1 px-3 rounded-full text-xs font-semibold">${paper.category}</span></td>
+                    <td class="p-4">
+                        <span class="bg-blue-50 text-blue-600 py-1 px-3 rounded-full text-xs font-semibold">${paper.category}</span>
+                        ${paper.is_featured ? '<span class="ml-2 bg-yellow-100 text-yellow-800 py-1 px-2 rounded-full text-xs"><i class="fas fa-star text-[10px] mr-1"></i>Featured</span>' : ''}
+                    </td>
                     <td class="p-4 text-gray-500">${new Date(paper.date).toLocaleDateString()}</td>
                     <td class="p-4 text-right">
                         <button onclick="window.open('${paper.pdf_url}', '_blank')" class="text-gray-400 hover:text-blue-500 mr-3" title="View"><i class="fas fa-eye"></i></button>

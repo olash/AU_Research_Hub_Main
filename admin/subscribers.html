@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Subscribers - AU Research Hub</title>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CSS -->
+    <link href="../style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="font-inter bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="/admin/dashboard" class="text-gray-500 hover:text-gray-900 transition-colors mr-2">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <span class="text-xl font-bold text-gray-900">Newsletter Subscribers</span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="/admin/papers" class="text-sm font-medium text-gray-500 hover:text-blue-600">Papers</a>
+                    <a href="/admin/team" class="text-sm font-medium text-gray-500 hover:text-blue-600">Team</a>
+                    <a href="/admin/initiatives"
+                        class="text-sm font-medium text-gray-500 hover:text-blue-600">Initiatives</a>
+                    <button id="logout-btn" class="text-gray-500 hover:text-red-500 transition-colors font-medium ml-4">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Stats Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Subscribers</h3>
+                    <div class="p-2 bg-blue-50 rounded-lg">
+                        <i class="fas fa-users text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="flex items-end space-x-2">
+                    <span id="total-subscribers" class="text-3xl font-bold text-gray-900">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscribers List -->
+        <div class="mb-12">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-gray-900">Subscriber List</h3>
+                    <div class="flex space-x-3">
+                        <button id="refresh-list"
+                            class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded hover:bg-blue-50 transition-colors">
+                            <i class="fas fa-sync-alt mr-1"></i> Refresh
+                        </button>
+                        <button id="copy-emails"
+                            class="text-gray-600 hover:text-gray-900 px-3 py-1 rounded hover:bg-gray-100 transition-colors"
+                            title="Copy all emails">
+                            <i class="fas fa-copy mr-1"></i> Copy All
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider">
+                                <th class="p-4 border-b">Email Address</th>
+                                <th class="p-4 border-b">Subscribed Date</th>
+                                <th class="p-4 border-b text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscribers-list" class="text-sm divide-y divide-gray-100">
+                            <!-- Populated via JS -->
+                            <tr>
+                                <td colspan="3" class="p-8 text-center text-gray-500">Loading subscribers...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center">
+            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-trash-alt text-red-500"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Remove Subscriber?</h3>
+            <p class="text-gray-500 text-sm mb-6">Are you sure you want to remove this email? They will no longer
+                receive updates.</p>
+            <div class="flex space-x-3 justify-center">
+                <button id="cancel-delete"
+                    class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
+                <button id="confirm-delete"
+                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors shadow-sm">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { supabase } from '../supabase.js';
+
+        // --- Auth Check ---
+        async function checkSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = '/admin';
+            }
+        }
+        checkSession();
+
+        // --- Persistent Session Check ---
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (!session) {
+                window.location.href = '/admin';
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = '/admin';
+        });
+
+        // --- List Logic ---
+        const list = document.getElementById('subscribers-list');
+        const totalCount = document.getElementById('total-subscribers');
+        let itemToDelete = null;
+        let allEmails = [];
+
+        async function fetchSubscribers() {
+            list.innerHTML = '<tr><td colspan="3" class="p-8 text-center text-gray-500">Loading...</td></tr>';
+
+            const { data, error, count } = await supabase
+                .from('newsletter_subscribers')
+                .select('*', { count: 'exact' })
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                list.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-red-500">Error loading data</td></tr>`;
+                return;
+            }
+
+            totalCount.textContent = count || 0;
+            allEmails = data.map(s => s.email);
+
+            if (data.length === 0) {
+                list.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="p-8 text-center text-gray-500">
+                            No subscribers yet.
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            list.innerHTML = data.map(item => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="p-4 font-medium text-gray-900">
+                        ${item.email}
+                    </td>
+                    <td class="p-4 text-gray-500">
+                        ${new Date(item.created_at).toLocaleDateString()}
+                    </td>
+                    <td class="p-4 text-right">
+                        <button class="text-gray-400 hover:text-red-500 delete-btn" data-id="${item.id}" title="Remove"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Attach Delete Listeners
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    itemToDelete = btn.dataset.id;
+                    document.getElementById('delete-modal').classList.remove('hidden');
+                });
+            });
+        }
+
+        document.getElementById('refresh-list').addEventListener('click', fetchSubscribers);
+
+        // Copy Emails
+        document.getElementById('copy-emails').addEventListener('click', () => {
+            if (allEmails.length === 0) return;
+            navigator.clipboard.writeText(allEmails.join(', ')).then(() => {
+                const btn = document.getElementById('copy-emails');
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+                setTimeout(() => btn.innerHTML = original, 2000);
+            });
+        });
+
+        // Delete Modal Actions
+        document.getElementById('cancel-delete').addEventListener('click', () => {
+            document.getElementById('delete-modal').classList.add('hidden');
+            itemToDelete = null;
+        });
+
+        document.getElementById('confirm-delete').addEventListener('click', async () => {
+            if (!itemToDelete) return;
+
+            const { error } = await supabase
+                .from('newsletter_subscribers')
+                .delete()
+                .eq('id', itemToDelete);
+
+            if (error) {
+                alert('Error removing subscriber');
+            } else {
+                fetchSubscribers();
+            }
+            document.getElementById('delete-modal').classList.add('hidden');
+        });
+
+        // Initial fetch
+        fetchSubscribers();
+
+    </script>
+</body>
+
+</html>

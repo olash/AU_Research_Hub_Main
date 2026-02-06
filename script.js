@@ -256,3 +256,47 @@ if (openSearchBtn && searchModal && searchInput && searchResults) {
         }
     }
 }
+
+// --- Newsletter Subscription Logic ---
+const newsletterEmail = document.getElementById("newsletter-email");
+const newsletterSubmit = document.getElementById("newsletter-submit");
+
+if (newsletterEmail && newsletterSubmit) {
+    newsletterSubmit.addEventListener("click", async () => {
+        const email = newsletterEmail.value.trim();
+        const originalText = newsletterSubmit.innerHTML;
+
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        newsletterSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        newsletterSubmit.disabled = true;
+
+        try {
+            const { error } = await supabase
+                .from('newsletter_subscribers')
+                .insert([{ email }]);
+
+            if (error) {
+                // Check specifically for unique violation (code 23505)
+                if (error.code === '23505') {
+                    alert("You are already subscribed!");
+                } else {
+                    console.error("Subscription error detail:", error);
+                    alert("Failed to subscribe (Database Error).");
+                }
+            } else {
+                alert("Successfully subscribed to the newsletter!");
+                newsletterEmail.value = "";
+            }
+        } catch (err) {
+            console.error("Subscription exception:", err);
+            alert("Failed to subscribe. Please try again.");
+        } finally {
+            newsletterSubmit.innerHTML = originalText;
+            newsletterSubmit.disabled = false;
+        }
+    });
+}
