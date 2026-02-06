@@ -39,8 +39,8 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-8">
                     <a href="/" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
-                    <a href="/projects" class="text-gray-700 hover:text-blue-600 transition-colors">Projects</a>
                     <a href="/resources" class="text-gray-700 hover:text-blue-600 transition-colors">Resources</a>
+                    <a href="/gallery" class="text-gray-700 hover:text-blue-600 transition-colors">Gallery</a>
                 </nav>
 
                 <!-- Desktop CTA and Search -->
@@ -86,8 +86,8 @@
                 </div>
                 <nav class="space-y-6">
                     <a href="/" class="block text-gray-700 hover:text-blue-600 text-lg">Home</a>
-                    <a href="/projects" class="block text-gray-700 hover:text-blue-600 text-lg">Projects</a>
                     <a href="/resources" class="block text-gray-700 hover:text-blue-600 text-lg">Resources</a>
+                    <a href="/gallery" class="block text-gray-700 hover:text-blue-600 text-lg">Gallery</a>
                     <div class="pt-6 border-t border-gray-200">
                         <a href="https://tally.so/r/mBVWK1">
                             <button
@@ -146,20 +146,16 @@
     </section>
 
     <!-- Image Section -->
-    <section class="fade-in-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
-        <div class="">
-            <!-- Room images -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="max-sm:flex max-sm:w-40 ">
-                    <img src="images/image 30.png" alt="" class="">
-                    <img src="images/Green Interior.png" alt="" class="w-full rounded-2xl object-cover">
-                </div>
-                <div class="max-sm:h-64">
-                    <img src="images/Green Interior 2.png" alt="" class="w-full h-full rounded-2xl object-cover">
-                </div>
-            </div>
+    <!-- Video Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16 fade-in-section">
+        <div class="relative w-full overflow-hidden rounded-2xl shadow-xl" style="padding-top: 56.25%;">
+            <iframe class="absolute top-0 left-0 w-full h-full rounded-2xl"
+                src="https://www.youtube.com/embed/VIDEO_ID?autoplay=0&rel=0" title="AU Research Hub" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
         </div>
-    </section>
+    </div>
 
     <!-- About Section -->
     <section class="fade-in-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
@@ -748,8 +744,8 @@
             <!-- Footer Navigation -->
             <div class="border-t border-gray-800 pt-10 w-full">
                 <div class="flex flex-wrap justify-center gap-8 mb-8 text-gray-400 font-medium">
-                    <a href="/projects" class="hover:text-white transition-colors">Projects</a>
                     <a href="/resources" class="hover:text-white transition-colors">Resources</a>
+                    <a href="/gallery" class="hover:text-white transition-colors">Gallery</a>
                     <a href="#" class="hover:text-white transition-colors">News & Events</a>
                     <a href="https://tally.so/r/mBVWK1" class="hover:text-white transition-colors">Submit a Paper</a>
                 </div>
@@ -801,7 +797,15 @@
                     class="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-bold mb-6 w-max uppercase tracking-wider">New
                     Announcement</span>
                 <h3 id="popup-title" class="text-3xl font-bold text-gray-900 mb-4 leading-tight"></h3>
-                <p id="popup-desc" class="text-gray-600 text-lg leading-relaxed"></p>
+                <p id="popup-desc" class="text-gray-600 text-lg leading-relaxed mb-6"></p>
+                <a id="popup-btn" href="#" target="_blank"
+                    class="hidden inline-flex items-center justify-center bgBlue text-white px-6 py-3 rounded-full font-medium hover:bg-blue-600 transition-colors w-fit">
+                    <span id="popup-btn-text">Learn More</span>
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
             </div>
         </div>
     </div>

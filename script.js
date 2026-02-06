@@ -79,6 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const img = document.getElementById('popup-image');
         const title = document.getElementById('popup-title');
         const desc = document.getElementById('popup-desc');
+        const btn = document.getElementById('popup-btn');
+        const btnText = document.getElementById('popup-btn-text');
 
         if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
         modal.addEventListener('click', (e) => {
@@ -101,6 +103,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (img) img.src = data.image_url;
             if (title) title.textContent = data.title;
             if (desc) desc.textContent = data.description;
+
+            // Handle Button
+            if (btn && data.button_url) {
+                btn.href = data.button_url;
+                if (btnText) btnText.textContent = data.button_text || 'Learn More';
+                btn.classList.remove('hidden');
+            } else if (btn) {
+                btn.classList.add('hidden');
+            }
 
             // Show modal
             modal.classList.remove('hidden');

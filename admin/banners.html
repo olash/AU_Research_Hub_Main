@@ -29,6 +29,7 @@
 
                 <div class="flex items-center space-x-4">
                     <a href="/admin/papers" class="text-sm font-medium text-gray-500 hover:text-blue-600">Papers</a>
+                    <a href="/admin/gallery" class="text-sm font-medium text-gray-500 hover:text-blue-600">Gallery</a>
                     <button id="logout-btn" class="text-gray-500 hover:text-red-500 transition-colors font-medium ml-4">
                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
                     </button>
@@ -61,6 +62,19 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                     <textarea id="banner-desc" required rows="3" placeholder="Brief description..."
                         class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Button Text (Optional)</label>
+                        <input type="text" id="banner-btn-text" placeholder="e.g. Register Now"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Button URL (Optional)</label>
+                        <input type="text" id="banner-btn-url" placeholder="e.g. /events/register"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
                 </div>
 
                 <div>
@@ -143,6 +157,8 @@
             try {
                 const title = document.getElementById('banner-title').value;
                 const desc = document.getElementById('banner-desc').value;
+                const btnText = document.getElementById('banner-btn-text').value;
+                const btnUrl = document.getElementById('banner-btn-url').value;
                 const file = bannerInput.files[0];
 
                 if (!file) throw new Error("Please upload a banner image");
@@ -184,6 +200,8 @@
                         title,
                         description: desc,
                         image_url: publicUrl,
+                        button_text: btnText || null,
+                        button_url: btnUrl || null,
                         is_active: true,
                         created_at: new Date()
                     }]);
