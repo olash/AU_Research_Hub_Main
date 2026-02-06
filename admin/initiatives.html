@@ -251,20 +251,18 @@
             return data.secure_url;
         }
 
-        // PDF Uploader (Supabase)
-        async function uploadPDF(file) {
-            const fileName = `${Date.now()}-${file.name.replace(/\s/g, '_')}`;
+        // PDF Uploader (Supabase Storage)
+        async function uploadInitiativePDF(file) {
+            const filePath = `${Date.now()}_${file.name}`;
             const { data, error } = await supabase.storage
-                .from('initiatives_pdfs')
-                .upload(fileName, file);
+                .from("initiatives_pdfs")
+                .upload(filePath, file);
 
             if (error) throw error;
 
-            const { data: { publicUrl } } = supabase.storage
-                .from('initiatives_pdfs')
-                .getPublicUrl(fileName);
-
-            return publicUrl;
+            return supabase.storage
+                .from("initiatives_pdfs")
+                .getPublicUrl(filePath).data.publicUrl;
         }
 
         imageBox.addEventListener("click", () => imageInput.click());
@@ -330,15 +328,14 @@
 
                 let pdfUrl = currentPdfUrl;
                 if (pdfInput.files[0]) {
-                    pdfUrl = await uploadPDF(pdfInput.files[0]);
+                    pdfUrl = await uploadInitiativePDF(pdfInput.files[0]);
                 }
 
-                if (!imageUrl) throw new Error("Cover image is required");
-
+                // Note: User snippet requested 'cover_image', but DB schema has 'image_url'. Keeping 'image_url'.
                 const payload = {
                     title,
-                    description,
                     category,
+                    description,
                     year,
                     location,
                     image_url: imageUrl,
@@ -346,6 +343,8 @@
                     is_featured: isFeatured,
                     published: isPublished
                 };
+
+                if (!imageUrl) throw new Error("Cover image is required");
 
                 let error;
                 if (isEditing) {
