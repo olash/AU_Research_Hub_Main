@@ -70,10 +70,10 @@
 
                 <!-- Desktop CTA and Search -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <button class="p-2 text-gray-400 hover:text-gray-600">
+                    <button id="openSearch" class="p-2 text-gray-500 hover:text-gray-800">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                d="M21 21l-4.35-4.35m1.1-4.65a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
                     <a href="https://tally.so/r/mBVWK1">
@@ -263,6 +263,14 @@
                 <h3 id="popup-title" class="text-3xl font-bold text-gray-900 mb-4 leading-tight"></h3>
                 <p id="popup-desc" class="text-gray-600 text-lg leading-relaxed"></p>
             </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="fixed inset-0 bg-black/50 hidden z-[200]">
+        <div class="bg-white max-w-xl mx-auto mt-32 rounded-2xl p-6 shadow-2xl">
+            <input id="searchInput" type="text" placeholder="Search papers, gallery, projects..."
+                class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg">
         </div>
     </div>
 

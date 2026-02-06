@@ -121,3 +121,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })();
 });
+
+// --- Global Search Logic ---
+const openSearchBtn = document.getElementById("openSearch");
+const searchModal = document.getElementById("searchModal");
+const searchInput = document.getElementById("searchInput");
+
+if (openSearchBtn && searchModal && searchInput) {
+    openSearchBtn.addEventListener("click", () => {
+        searchModal.classList.remove("hidden");
+        searchInput.focus();
+    });
+
+    searchModal.addEventListener("click", (e) => {
+        if (e.target === searchModal) {
+            searchModal.classList.add("hidden");
+        }
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `/search/?q=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+}
