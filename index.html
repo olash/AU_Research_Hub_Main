@@ -38,9 +38,11 @@
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
+                    <a href="/" class="text-blue-600 font-medium transition-colors">Home</a>
                     <a href="/resources" class="text-gray-700 hover:text-blue-600 transition-colors">Resources</a>
                     <a href="/gallery" class="text-gray-700 hover:text-blue-600 transition-colors">Gallery</a>
+                    <a href="/initiatives.html" class="text-gray-700 hover:text-blue-600 transition-colors">Research
+                        Initiatives</a>
                 </nav>
 
                 <!-- Desktop CTA and Search -->
@@ -88,6 +90,8 @@
                     <a href="/" class="block text-gray-700 hover:text-blue-600 text-lg">Home</a>
                     <a href="/resources" class="block text-gray-700 hover:text-blue-600 text-lg">Resources</a>
                     <a href="/gallery" class="block text-gray-700 hover:text-blue-600 text-lg">Gallery</a>
+                    <a href="/initiatives.html" class="block text-gray-700 hover:text-blue-600 text-lg">Research
+                        Initiatives</a>
                     <div class="pt-6 border-t border-gray-200">
                         <a href="https://tally.so/r/mBVWK1">
                             <button
@@ -503,59 +507,7 @@
         </div>
 
         <!-- Footer Content -->
-        <div class="relative z-10 max-w-xl mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-5xl font-medium text-white mb-6 leading-tight">
-                Stay in the know with our<br>
-                weekly newsletter
-            </h2>
-
-            <p class="text-gray-300 text-lg mb-12 max-w-lg mx-auto">
-                Regular updates ensure that readers have access to fresh perspectives,
-                making Poster a must-read.
-            </p>
-
-            <!-- Email Signup Form -->
-            <div
-                class="flex flex-col sm:flex-row gap-2 justify-center items-center mb-16 md:bg-white md:p-1.5 rounded-full md:w-fit md:mx-auto">
-                <input id="newsletter-email" type="email" placeholder="Email address"
-                    class="w-full sm:w-64 px-6 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none bg-transparent">
-                <button id="newsletter-submit"
-                    class="bgBlue text-white px-6 py-3 rounded-full text-sm font-bold hover:bg-blue-500 flex items-center space-x-2 transition-all shadow-md w-full sm:w-auto justify-center">
-                    <span>Subscribe</span>
-                    <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                            d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Footer Navigation -->
-            <div class="border-t border-gray-800 pt-10 w-full">
-                <div class="flex flex-wrap justify-center gap-8 mb-8 text-gray-400 font-medium">
-                    <a href="/resources" class="hover:text-white transition-colors">Resources</a>
-                    <a href="/gallery" class="hover:text-white transition-colors">Gallery</a>
-                    <a href="#" class="hover:text-white transition-colors">News & Events</a>
-                    <a href="https://tally.so/r/mBVWK1" class="hover:text-white transition-colors">Submit a Paper</a>
-                </div>
-
-                <div class="flex justify-center gap-8 mb-12">
-                    <a href="#" class="text-gray-500 hover:text-white transition-colors text-xl">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-white transition-colors text-xl">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-white transition-colors text-xl">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-
-                <p class="text-gray-600 text-sm">
-                    ©A+UR HUB. All rights reserved.
-                </p>
-                <p class="text-gray-700 text-xs mt-2">Designed by Sheriff Abdurrahman</p>
-            </div>
-        </div>
+        <div id="footer"></div>
 
         <!-- Large Text Bottom -->
         <div class="absolute bottom-0 left-0 right-0 flex justify-center pointer-events-none opacity-100 select-none">
@@ -616,6 +568,17 @@
     </div>
 
     <!-- Javascript -->
+    <script type="module">
+        import { initNewsletter } from './script.js';
+
+        fetch("/components/footer.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("footer").innerHTML = html;
+                initNewsletter();
+            })
+            .catch(err => console.error("Failed to load footer:", err));
+    </script>
     <script type="module" src="script.js"></script>
     <script type="module">
         import { supabase } from './supabase.js';
