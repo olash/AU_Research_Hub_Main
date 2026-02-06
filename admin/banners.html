@@ -171,42 +171,74 @@
                     throw new Error("Authentication failed. Please log in again.");
                 }
 
-                // 2. Upload Image
-                const fileName = `banner_${Date.now()}_${file.name.replace(/\s+/g, '-')}`;
-                const { data: uploadData, error: uploadError } = await supabase.storage
-                    .from('banners')
-                    .upload(fileName, file);
+                // 2. Upload Image (If selected)
+                let finalImageUrl = null;
 
-                if (uploadError) {
-                    console.error("Upload error:", uploadError);
-                    throw uploadError;
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileName = `banner_${Date.now()}_${file.name.replace(/\s+/g, '-')}`;
+                    const { data: uploadData, error: uploadError } = await supabase.storage
+                        .from('banners')
+                        .upload(fileName, file);
+
+                    if (uploadError) {
+                        console.error("Upload error:", uploadError);
+                        throw uploadError;
+                    }
+
+                    const { data: { publicUrl } } = supabase.storage
+                        .from('banners')
+                        .getPublicUrl(uploadData.path);
+                    finalImageUrl = publicUrl;
                 }
 
-                // 3. Get Public URL
-                const { data: { publicUrl } } = supabase.storage
-                    .from('banners')
-                    .getPublicUrl(uploadData.path);
+                // 3. Check for Existing Active Banner
+                const { data: existingBanner } = await supabase
+                    .from("banners")
+                    .select("id, image_url")
+                    .eq("is_active", true)
+                    .maybeSingle(); // Use maybeSingle to avoid error if 0 rows
 
-                // 2. Deactivate old banners
-                await supabase
-                    .from('banners')
-                    .update({ is_active: false })
-                    .eq('is_active', true);
+                // Use new image if uploaded, otherwise keep existing, otherwise require one for new insert
+                const imageToSave = finalImageUrl || (existingBanner?.image_url);
 
-                // 3. Insert new banner
-                const { error: dbError } = await supabase
-                    .from('banners')
-                    .insert([{
-                        title,
-                        description: desc,
-                        image_url: publicUrl,
-                        button_text: btnText || null,
-                        button_url: btnUrl || null,
-                        is_active: true,
-                        created_at: new Date()
-                    }]);
+                if (!imageToSave) {
+                    throw new Error("Please upload a banner image");
+                }
 
-                if (dbError) throw dbError;
+                // 4. Update or Insert
+                if (existingBanner) {
+                    // UPDATE
+                    const { error: updateError } = await supabase
+                        .from("banners")
+                        .update({
+                            title,
+                            description: desc,
+                            image_url: imageToSave,
+                            button_text: btnText || null,
+                            button_url: btnUrl || null,
+                            // is_active is already true
+                        })
+                        .eq("id", existingBanner.id);
+
+                    if (updateError) throw updateError;
+
+                } else {
+                    // INSERT
+                    const { error: insertError } = await supabase
+                        .from("banners")
+                        .insert([{
+                            title,
+                            description: desc,
+                            image_url: imageToSave,
+                            button_text: btnText || null,
+                            button_url: btnUrl || null,
+                            is_active: true,
+                            created_at: new Date()
+                        }]);
+
+                    if (insertError) throw insertError;
+                }
 
                 alert('Popup banner updated successfully!');
                 e.target.reset();
