@@ -18,7 +18,7 @@ async function loadFooterContent() {
             const item = initiatives[Math.floor(Math.random() * initiatives.length)];
 
             // Ensure image url is valid
-            const imgUrl = item.cover_image || 'images/default-paper.jpg'; // Fallback
+            const imgUrl = item.cover_image || '/images/default-paper.jpg'; // Fallback
 
             if (initiativeCard) {
                 initiativeCard.innerHTML = `
@@ -46,7 +46,7 @@ async function loadFooterContent() {
                 .slice(0, 2)
                 .map(p => `
             <div class="footer-paper">
-              <img src="${p.cover_image || 'images/default-paper.jpg'}" alt="${p.title}" />
+              <img src="${p.cover_image || '/images/default-paper.jpg'}" alt="${p.title}" />
               <div style="padding:12px">
                 <strong style="display:block; line-height:1.2;">${p.title}</strong>
               </div>
@@ -94,14 +94,17 @@ function setupNewsletter() {
 }
 
 // Initialize Footer
-fetch("/components/footer.html")
-    .then(res => res.text())
-    .then(html => {
-        const footerContainer = document.getElementById("footer");
-        if (footerContainer) {
+// Initialize Footer
+document.addEventListener("DOMContentLoaded", () => {
+    const footerContainer = document.getElementById("footer");
+    if (!footerContainer) return;
+
+    fetch("/components/footer.html")
+        .then(res => res.text())
+        .then(html => {
             footerContainer.innerHTML = html;
             loadFooterContent();
             setupNewsletter();
-        }
-    })
-    .catch(err => console.error("Failed to load footer HTML:", err));
+        })
+        .catch(err => console.error("Failed to load footer HTML:", err));
+});

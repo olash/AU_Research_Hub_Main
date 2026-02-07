@@ -11,6 +11,8 @@
     <link href="style.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Footer CSS -->
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body class="font-inter">
@@ -126,18 +128,9 @@
     <!-- Scripts -->
     <script type="module" src="script.js"></script>
     <script type="module" src="search.js"></script>
+    <script type="module" src="/js/footer.js"></script>
     <script type="module">
         import { supabase } from './supabase.js';
-        import { initNewsletter } from './script.js';
-
-        // Load Footer
-        fetch("/components/footer.html")
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById("footer").innerHTML = html;
-                initNewsletter();
-            })
-            .catch(err => console.error("Failed to load footer:", err));
 
         // Load Initiatives
         async function loadInitiatives() {
