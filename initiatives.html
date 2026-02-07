@@ -153,26 +153,39 @@
         // Load Initiatives
         async function loadInitiatives() {
             const grid = document.getElementById("initiativesGrid");
+            if (!grid) return;
+
             try {
+                console.log("Fetching initiatives...");
                 const { data, error } = await supabase
                     .from("initiatives")
                     .select("*")
                     .eq("published", true)
                     .order("created_at", { ascending: false });
 
+                console.log("Initiatives data:", data);
+                console.log("Initiatives error:", error);
+
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-                    grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-500">No published initiatives found.</div>';
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-12 text-gray-500">
+                            No initiatives published yet.
+                        </div>
+                    `;
                     return;
                 }
 
                 grid.innerHTML = "";
                 data.forEach(item => {
+                    // Fallback for image if keeping 'image_url' schema
+                    const imageSrc = item.image_url || item.cover_image || 'images/placeholder.jpg';
+
                     grid.innerHTML += `
                     <div class="rounded-xl border border-gray-100 p-6 hover:shadow-lg transition-shadow bg-white flex flex-col h-full">
                         <div class="h-48 mb-4 overflow-hidden rounded-lg bg-gray-100 flex-shrink-0">
-                             <img src="${item.image_url}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" alt="${item.title}" />
+                             <img src="${imageSrc}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" alt="${item.title}" />
                         </div>
                         <h3 class="font-semibold text-xl mb-2 text-gray-900 group-hover:text-blue-600">${item.title}</h3>
                         <p class="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed flex-grow">

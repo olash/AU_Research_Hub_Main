@@ -291,18 +291,31 @@
         document.getElementById('cancel-edit').addEventListener('click', resetForm);
 
         function resetForm() {
-            document.getElementById('add-initiative-form').reset();
+            const statusMessage = document.getElementById("statusMessage"); // If exists
+            const coverPreview = document.getElementById("imagePreview"); // ID mismatch in user snippet vs actual file? Actual is imagePreview
+            const pdfName = document.getElementById("pdfName");
+            const imageName = document.getElementById("imageName");
+            const form = document.getElementById('add-initiative-form');
+            const submitText = document.getElementById('submit-text');
+            const cancelBtn = document.getElementById('cancel-edit');
+            const pdfBox = document.getElementById("pdfUploadBox");
+
+            if (form) form.reset();
             isEditing = false;
             editId = null;
             currentImageUrl = null;
             currentPdfUrl = null;
 
-            document.getElementById('submit-text').textContent = 'Add Initiative';
-            document.getElementById('cancel-edit').classList.add('hidden');
-            imagePreview.classList.add('hidden');
-            document.getElementById('imageName').textContent = '';
-            document.getElementById('pdfName').textContent = '';
-            pdfBox.classList.remove('border-green-500', 'bg-green-50');
+            if (submitText) submitText.textContent = 'Add Initiative';
+            if (cancelBtn) cancelBtn.classList.add('hidden');
+
+            if (coverPreview) {
+                coverPreview.src = "";
+                coverPreview.classList.add('hidden');
+            }
+            if (imageName) imageName.textContent = '';
+            if (pdfName) pdfName.textContent = '';
+            if (pdfBox) pdfBox.classList.remove('border-green-500', 'bg-green-50');
         }
 
         document.getElementById('add-initiative-form').addEventListener('submit', async (e) => {
