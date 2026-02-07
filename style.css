@@ -7,37 +7,38 @@ body {
 }
 
 .bgBlue {
-    background-color: #00AEEF;
+  background-color: #00AEEF;
 }
 
 .bgBlue:hover {
-  background-color: #0086b3; /* Slightly darker */
+  background-color: #0086b3;
+  /* Slightly darker */
 }
 
-.txtBlue{
-    color: #00AEEF;
-    border-color: #00AEEF;
+.txtBlue {
+  color: #00AEEF;
+  border-color: #00AEEF;
 }
 
 .mobile-menu {
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
 }
-        
+
 .mobile-menu.open {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 .fade-in-section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.3s ease-out;
-    will-change: opacity, transform;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.3s ease-out;
+  will-change: opacity, transform;
 }
 
 .fade-in-section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .search-results {
@@ -47,7 +48,7 @@ body {
   right: 0;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   z-index: 50;
   max-height: 420px;
   overflow-y: auto;
@@ -66,7 +67,7 @@ body {
 }
 
 .search-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .search-item:hover {
@@ -82,19 +83,37 @@ body {
 }
 
 .search-input {
-    width: 280px;
-    padding: 10px 16px;
-    border-radius: 9999px;
-    background-color: #F3F4F6;
-    border: 1px solid transparent;
-    font-size: 14px;
-    transition: all 0.2s;
+  width: 280px;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  background-color: #F3F4F6;
+  border: 1px solid transparent;
+  font-size: 14px;
+  transition: all 0.2s;
 }
 
 .search-input:focus {
-    outline: none;
-    background-color: white;
-    border-color: #00AEEF;
-    box-shadow: 0 0 0 3px rgba(0, 174, 239, 0.1);
-    width: 320px;
+  outline: none;
+  background-color: white;
+  border-color: #00AEEF;
+  box-shadow: 0 0 0 3px rgba(0, 174, 239, 0.1);
+
+  width: 320px;
+}
+
+/* Team Avatar Styles */
+.team-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

@@ -468,9 +468,10 @@
 
             container.innerHTML = team.map(member => `
                 <div class="text-center group">
-                    <div class="mb-6 relative overflow-hidden rounded-2xl">
-                        <img src="${member.image_url || 'images/default-avatar.png'}" alt="${member.name}"
-                            class="w-full h-48 object-contain transition-transform duration-300 group-hover:scale-105">
+                    <div class="mb-6 relative">
+                        <div class="team-avatar">
+                            <img src="${member.image_url || 'images/default-avatar.png'}" alt="${member.name}">
+                        </div>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-1">${member.name}</h3>
                     <p class="text-gray-500 font-medium mb-4">${member.role}</p>
