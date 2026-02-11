@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Subscribers - AU Research Hub</title>
+    <link rel="icon" type="image/png" href="../images/AUlogo.png">
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- CSS -->
@@ -185,14 +186,6 @@
                     </td>
                 </tr>
             `).join('');
-
-            // Attach Delete Listeners
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    itemToDelete = btn.dataset.id;
-                    document.getElementById('delete-modal').classList.remove('hidden');
-                });
-            });
         }
 
         document.getElementById('refresh-list').addEventListener('click', fetchSubscribers);
@@ -208,7 +201,15 @@
             });
         });
 
-        // Delete Modal Actions
+        // Delete Modal Actions (Event Delegation)
+        list.addEventListener('click', (e) => {
+            const btn = e.target.closest('.delete-btn');
+            if (!btn) return;
+            itemToDelete = btn.dataset.id;
+            console.log("Preparing to delete subscriber:", itemToDelete);
+            document.getElementById('delete-modal').classList.remove('hidden');
+        });
+
         document.getElementById('cancel-delete').addEventListener('click', () => {
             document.getElementById('delete-modal').classList.add('hidden');
             itemToDelete = null;
@@ -217,12 +218,14 @@
         document.getElementById('confirm-delete').addEventListener('click', async () => {
             if (!itemToDelete) return;
 
+            console.log("Deleting subscriber:", itemToDelete);
             const { error } = await supabase
                 .from('newsletter_subscribers')
                 .delete()
                 .eq('id', itemToDelete);
 
             if (error) {
+                console.error("Error removing subscriber:", error);
                 alert('Error removing subscriber');
             } else {
                 fetchSubscribers();
